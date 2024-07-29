@@ -1,16 +1,25 @@
 {
   "main": "index.js",
   "dependencies": {
-    "@celo/contractkit": "^4.1.0",
-    "bignumber.js": "^9.1.1"
+    "@celo/contractkit": "^4.1.1",
+    "assert": "^2.1.0",
+    "bignumber.js": "^9.1.2",
+    "crypto-browserify": "^3.12.0",
+    "https-browserify": "^1.0.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.4",
+    "vm-browserify": "^1.1.2"
   },
   "devDependencies": {
-    "friendly-errors-webpack-plugin": "^1.7.0",
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.25.0",
+    "babel-loader": "^8.3.0",
     "html-webpack-plugin": "^4.5.2",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.15.1"
-  }
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
   "scripts": {
     "dev": "node index.js",
     "build": "webpack"

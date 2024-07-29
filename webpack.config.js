@@ -1,32 +1,51 @@
-const path = require("path");
-const webpack = require("webpack");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: "development",
-  devtool: "cheap-module-eval-source-map",
-  entry: {
-    main: path.resolve(process.cwd(), "src", "main.js")
-  },
+  mode: 'development',
+  devtool: 'eval-source-map',
+  entry: path.resolve(__dirname, 'src', 'main.js'),
   output: {
-    path: path.resolve(process.cwd(), "docs"),
-    publicPath: ""
+    path: path.resolve(__dirname, 'docs'),
+    filename: 'bundle.js',
+    publicPath: ''
   },
-	node: {
-   fs: "empty",
-	 net: "empty"
-	},
-  watchOptions: {
-    // ignored: /node_modules/,
-    aggregateTimeout: 300, // After seeing an edit, wait .3 seconds to recompile
-    poll: 500 // Check for edits every 5 seconds
+  resolve: {
+    fallback: {
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "assert": require.resolve("assert/"),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify"),
+      "url": require.resolve("url/"),
+      "fs": false, // Omit fs if not required in the browser
+      "net": false, // Omit net if not required in the browser
+      "vm": require.resolve("vm-browserify") // Or false if not needed
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'docs'),
+    port: 3000,
+    hot: true,
+    historyApiFallback: true
   },
   plugins: [
-    new FriendlyErrorsWebpackPlugin(),
-    new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(process.cwd(), "public", "index.html")
+      template: path.resolve(__dirname, 'public', 'index.html')
     })
   ]
-}
+};
